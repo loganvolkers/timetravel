@@ -55,7 +55,8 @@ class App extends Component {
     this.forward = this.forward.bind(this);
     this.back = this.back.bind(this);
     this.toggleUnit = this.toggleUnit.bind(this);
-    
+    this.toggleTicking = this.toggleTicking.bind(this);    
+  
     this.state = {
       time: 1,
       timeframe: {
@@ -87,8 +88,22 @@ class App extends Component {
           }
         ]
       }],
-      unit: "days"
+      unit: "days",
+      ticking: false
     }
+    
+    setInterval(()=> this.tick(), 200);
+  }
+  
+  tick(){
+    if(this.state.ticking){
+      this.step();
+    } 
+  }
+  
+  toggleTicking(){
+    let {ticking} = this.state;
+    this.setState({ticking:!ticking});
   }
   
   /**
@@ -190,6 +205,7 @@ class App extends Component {
             <h2>Current timewarp: <small>{this.state.time}</small></h2> <br/>
             <button onClick={this.step}>Step</button>
             <button onClick={this.unstep}>UnStep</button>
+            <button onClick={this.toggleTicking}>{this.state.ticking ? "Ticking" : "Paused"}</button>
             <button onClick={this.toggleUnit}>{this.state.unit}</button>
             
             <JSONArea value={this.state.schedules[0]} onChange={this.startChange.bind(this)} style={{width:"100%", height: 400}} />
@@ -217,7 +233,7 @@ const addHours = function(d, h) {
 }
 
 function scheduleToBigCalendar(schedule, currentTime, unit = "days"){
-    let projected = projectSchedule({ schedule, timeframe:{ start: 0, end: 31} });
+    let projected = projectSchedule({ schedule, timeframe:{ start: 0, end: 91} });
 
     let start = new Date();
     start.setFullYear(1337, 0, 0)
