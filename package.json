@@ -2,7 +2,7 @@
   "name": "timetravel",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://loganvolkers.github.io/timetravel/",
   "dependencies": {
     "jsonarea": "^0.1.0",
     "lodash": "^4.17.4",
